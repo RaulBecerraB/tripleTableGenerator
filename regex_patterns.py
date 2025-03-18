@@ -1,13 +1,13 @@
-# Regex patterns for expression parsing
+# Patrones de expresiones regulares para el análisis de expresiones
 
-# Pattern to match the innermost parenthesized expression
-INNERMOST_PARENTHESES = r'\(([^()]*)\)'
+# Patrón para encontrar la expresión entre paréntesis más interna
+PARENTESIS_INTERNOS = r'\(([^()]*)\)'
 
-# Pattern to match multiplication and division operations
-MULTIPLICATIVE_OPERATORS = r'([a-zA-Z0-9()]+)\s*([*/])\s*([a-zA-Z0-9()]+)'
+# Patrón para encontrar operaciones de multiplicación y división
+OPERADORES_MULTIPLICATIVOS = r'([a-zA-Z0-9()]+)\s*([*/])\s*([a-zA-Z0-9()]+)'
 
-# Pattern to match addition and subtraction operations
-ADDITIVE_OPERATORS = r'([a-zA-Z0-9()]+)\s*([+-])\s*([a-zA-Z0-9()]+)'
+# Patrón para encontrar operaciones de suma y resta
+OPERADORES_ADITIVOS = r'([a-zA-Z0-9()]+)\s*([+-])\s*([a-zA-Z0-9()]+)'
 
-# Pattern to identify if a string is a temporary variable (T)
-TEMP_VARIABLE = r'^T\(\d+\)$' 
+# Patrón para identificar si una cadena es una variable temporal (T)
+VARIABLE_TEMPORAL = r'^T\(\d+\)$' 

@@ -1,61 +1,61 @@
-from utils import process_parentheses, process_multiplicative_operators, process_additive_operators
+from utils import procesar_parentesis, procesar_operadores_multiplicativos, procesar_operadores_aditivos
 
-class TripleTableGenerator:
+class GeneradorTablaTriplos:
     def __init__(self):
-        self.triples = []
-        self.temp_counter = 0
+        self.triplos = []
+        self.contador_temp = 0
         
-    def reset(self):
-        self.triples = []
-        self.temp_counter = 0
+    def reiniciar(self):
+        self.triplos = []
+        self.contador_temp = 0
     
-    def add_triple(self, op, ope1, ope2):
-        """Add a new triple to the table"""
-        triple = {
-            'T': f'T({self.temp_counter})',
+    def agregar_triplo(self, op, ope1, ope2):
+        """Agregar un nuevo triplo a la tabla"""
+        triplo = {
+            'T': f'T({self.contador_temp})',
             'OP': op,
             'OPE1': ope1,
             'OPE2': ope2
         }
-        self.triples.append(triple)
-        result = triple['T']
-        self.temp_counter += 1
-        return result
+        self.triplos.append(triplo)
+        resultado = triplo['T']
+        self.contador_temp += 1
+        return resultado
     
-    def parse_expression(self, expression):
-        """Parse the expression and generate triples"""
-        self.reset()
+    def analizar_expresion(self, expresion):
+        """Analizar la expresión y generar triplos"""
+        self.reiniciar()
         
-        # Handle assignment operations
-        if '=' in expression:
-            left, right = expression.split('=', 1)
-            left = left.strip()
-            right = right.strip()
+        # Manejar operaciones de asignación
+        if '=' in expresion:
+            izquierda, derecha = expresion.split('=', 1)
+            izquierda = izquierda.strip()
+            derecha = derecha.strip()
             
-            # Process the right side of the equation
-            result = self.parse_subexpression(right)
+            # Procesar el lado derecho de la ecuación
+            resultado = self.analizar_subexpresion(derecha)
             
-            # Add the assignment triple
-            self.add_triple('=', left, result)
+            # Agregar el triplo de asignación
+            self.agregar_triplo('=', izquierda, resultado)
             
         else:
-            # If there's no assignment, just process the expression
-            self.parse_subexpression(expression)
+            # Si no hay asignación, simplemente procesar la expresión
+            self.analizar_subexpresion(expresion)
             
-        return self.triples
+        return self.triplos
     
-    def parse_subexpression(self, expr):
-        """Parse a subexpression recursively"""
+    def analizar_subexpresion(self, expr):
+        """Analizar una subexpresión recursivamente"""
         expr = expr.strip()
         
-        # Process the expression using utility functions
-        # First, process parenthesized expressions
-        expr = process_parentheses(expr, self.parse_subexpression, self.add_triple)
+        # Procesar la expresión utilizando funciones de utilidad
+        # Primero, procesar expresiones entre paréntesis
+        expr = procesar_parentesis(expr, self.analizar_subexpresion, self.agregar_triplo)
         
-        # Then, process multiplication and division
-        expr = process_multiplicative_operators(expr, self.add_triple)
+        # Luego, procesar multiplicación y división
+        expr = procesar_operadores_multiplicativos(expr, self.agregar_triplo)
         
-        # Finally, process addition and subtraction
-        expr = process_additive_operators(expr, self.add_triple)
+        # Finalmente, procesar suma y resta
+        expr = procesar_operadores_aditivos(expr, self.agregar_triplo)
         
         return expr 

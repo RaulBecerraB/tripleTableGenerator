@@ -1,106 +1,106 @@
 import re
 from regex_patterns import (
-    INNERMOST_PARENTHESES,
-    MULTIPLICATIVE_OPERATORS,
-    ADDITIVE_OPERATORS,
-    TEMP_VARIABLE
+    PARENTESIS_INTERNOS,
+    OPERADORES_MULTIPLICATIVOS,
+    OPERADORES_ADITIVOS,
+    VARIABLE_TEMPORAL
 )
 
-def process_parentheses(expr, parse_callback, add_triple_callback):
+def procesar_parentesis(expr, funcion_analisis, funcion_agregar_triplo):
     """
-    Process parenthesized expressions in a given expression
+    Procesa expresiones entre paréntesis en una expresión dada
     
     Args:
-        expr: The expression to process
-        parse_callback: A callback function to parse subexpressions
-        add_triple_callback: A callback function to add triples
+        expr: La expresión a procesar
+        funcion_analisis: Una función callback para analizar subexpresiones
+        funcion_agregar_triplo: Una función callback para agregar triplos
         
     Returns:
-        The processed expression with parentheses resolved
+        La expresión procesada con los paréntesis resueltos
     """
     expr = expr.strip()
     
-    # Handle parenthesized expressions first
+    # Manejar primero las expresiones entre paréntesis
     if '(' in expr and not expr.startswith('T('):
-        # Find the innermost parentheses
+        # Encontrar los paréntesis más internos
         while '(' in expr and not expr.startswith('T('):
-            # Match the innermost parenthesized expression
-            innermost = re.search(INNERMOST_PARENTHESES, expr)
-            if not innermost:
+            # Buscar la expresión entre paréntesis más interna
+            mas_interno = re.search(PARENTESIS_INTERNOS, expr)
+            if not mas_interno:
                 break
             
-            # Make sure we're not matching a T(n) pattern
-            full_match = innermost.group(0)
-            if full_match.startswith('T(') and full_match.endswith(')'):
-                # This is a T(n) pattern, skip it
-                match_start = innermost.start()
-                expr = expr[:match_start] + "TEMP_PLACEHOLDER" + expr[innermost.end():]
-                expr = expr.replace("TEMP_PLACEHOLDER", full_match)
+            # Asegurarse de que no estamos coincidiendo con un patrón T(n)
+            coincidencia_completa = mas_interno.group(0)
+            if coincidencia_completa.startswith('T(') and coincidencia_completa.endswith(')'):
+                # Este es un patrón T(n), omitirlo
+                inicio_coincidencia = mas_interno.start()
+                expr = expr[:inicio_coincidencia] + "MARCADOR_TEMPORAL" + expr[mas_interno.end():]
+                expr = expr.replace("MARCADOR_TEMPORAL", coincidencia_completa)
                 continue
             
-            # Process the inner expression
-            inner_expr = innermost.group(1)
-            result = parse_callback(inner_expr)
+            # Procesar la expresión interna
+            expr_interna = mas_interno.group(1)
+            resultado = funcion_analisis(expr_interna)
             
-            # Replace the parenthesized expression with its result
-            expr = expr.replace(f'({inner_expr})', result)
+            # Reemplazar la expresión entre paréntesis con su resultado
+            expr = expr.replace(f'({expr_interna})', resultado)
     
     return expr
 
-def process_multiplicative_operators(expr, add_triple_callback):
+def procesar_operadores_multiplicativos(expr, funcion_agregar_triplo):
     """
-    Process multiplication and division operations in an expression
+    Procesa operaciones de multiplicación y división en una expresión
     
     Args:
-        expr: The expression to process
-        add_triple_callback: A callback function to add triples
+        expr: La expresión a procesar
+        funcion_agregar_triplo: Una función callback para agregar triplos
         
     Returns:
-        The processed expression with multiplicative operations resolved
+        La expresión procesada con las operaciones multiplicativas resueltas
     """
-    # Process multiplication and division
+    # Procesar multiplicación y división
     while '*' in expr or '/' in expr:
-        md_match = re.search(MULTIPLICATIVE_OPERATORS, expr)
-        if not md_match:
+        coincidencia_md = re.search(OPERADORES_MULTIPLICATIVOS, expr)
+        if not coincidencia_md:
             break
             
-        ope1 = md_match.group(1)
-        op = md_match.group(2)
-        ope2 = md_match.group(3)
+        ope1 = coincidencia_md.group(1)
+        op = coincidencia_md.group(2)
+        ope2 = coincidencia_md.group(3)
         
-        result = add_triple_callback(op, ope1, ope2)
+        resultado = funcion_agregar_triplo(op, ope1, ope2)
         
-        # Replace the matched expression with the result
-        full_match = md_match.group(0)
-        expr = expr.replace(full_match, result, 1)
+        # Reemplazar la expresión coincidente con el resultado
+        coincidencia_completa = coincidencia_md.group(0)
+        expr = expr.replace(coincidencia_completa, resultado, 1)
     
     return expr
 
-def process_additive_operators(expr, add_triple_callback):
+def procesar_operadores_aditivos(expr, funcion_agregar_triplo):
     """
-    Process addition and subtraction operations in an expression
+    Procesa operaciones de suma y resta en una expresión
     
     Args:
-        expr: The expression to process
-        add_triple_callback: A callback function to add triples
+        expr: La expresión a procesar
+        funcion_agregar_triplo: Una función callback para agregar triplos
         
     Returns:
-        The processed expression with additive operations resolved
+        La expresión procesada con las operaciones aditivas resueltas
     """
-    # Process addition and subtraction
+    # Procesar suma y resta
     while '+' in expr or '-' in expr:
-        as_match = re.search(ADDITIVE_OPERATORS, expr)
-        if not as_match:
+        coincidencia_sr = re.search(OPERADORES_ADITIVOS, expr)
+        if not coincidencia_sr:
             break
             
-        ope1 = as_match.group(1)
-        op = as_match.group(2)
-        ope2 = as_match.group(3)
+        ope1 = coincidencia_sr.group(1)
+        op = coincidencia_sr.group(2)
+        ope2 = coincidencia_sr.group(3)
         
-        result = add_triple_callback(op, ope1, ope2)
+        resultado = funcion_agregar_triplo(op, ope1, ope2)
         
-        # Replace the matched expression with the result
-        full_match = as_match.group(0)
-        expr = expr.replace(full_match, result, 1)
+        # Reemplazar la expresión coincidente con el resultado
+        coincidencia_completa = coincidencia_sr.group(0)
+        expr = expr.replace(coincidencia_completa, resultado, 1)
     
     return expr 

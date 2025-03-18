@@ -1,39 +1,39 @@
-# Triple Table Generator
+# Generador de Tabla de Triplos
 
-A Python program that parses mathematical expressions and generates a table of triples (triplos), which represents the expression broken down into elementary operations.
+Un programa en Python que analiza expresiones matemáticas y genera una tabla de triplos, que representa la expresión desglosada en operaciones elementales.
 
-## Description
+## Descripción
 
-This program takes a mathematical expression as input (such as `x = (a * b) - c/d`) and breaks it down into a series of elementary operations, represented as triples. Each triple consists of:
+Este programa toma una expresión matemática como entrada (como `x = (a * b) - c/d`) y la descompone en una serie de operaciones elementales, representadas como triplos. Cada triplo consta de:
 
-- An operation (OP)
-- Two operands (OPE1 and OPE2)
-- A temporary variable (T) to store the result
+- Una operación (OP)
+- Dos operandos (OPE1 y OPE2)
+- Una variable temporal (T) para almacenar el resultado
 
-The program follows operator precedence rules:
+El programa sigue las reglas de precedencia de operadores:
 
-1. Parentheses are evaluated first
-2. Multiplication and division are evaluated next
-3. Addition and subtraction are evaluated last
-4. Assignment is evaluated last
+1. Los paréntesis se evalúan primero
+2. La multiplicación y división se evalúan después
+3. La suma y resta se evalúan a continuación
+4. La asignación se evalúa al final
 
-## Project Structure
+## Estructura del Proyecto
 
-The project is organized into several modules with specific responsibilities:
+El proyecto está organizado en varios módulos con responsabilidades específicas:
 
-- `triple_generator.py`: Contains the `TripleTableGenerator` class which parses expressions and generates triples
-- `table_formatter.py`: Contains the `TableFormatter` class for formatting the table output
-- `cli.py`: Provides the command-line interface
-- `app.py`: The main entry point for the application
-- `utils.py`: Contains utility functions for expression processing
-- `regex_patterns.py`: Contains all regular expression patterns used for parsing expressions
-- `test_triple_generator.py`: Unit tests for the triple generator
+- `triple_generator.py`: Contiene la clase `GeneradorTablaTriplos` que analiza expresiones y genera triplos
+- `table_formatter.py`: Contiene la clase `FormateadorTabla` para dar formato a la salida de la tabla
+- `cli.py`: Proporciona la interfaz de línea de comandos
+- `app.py`: El punto de entrada principal para la aplicación
+- `utils.py`: Contiene funciones de utilidad para el procesamiento de expresiones
+- `regex_patterns.py`: Contiene todos los patrones de expresiones regulares utilizados para analizar expresiones
+- `test_triple_generator.py`: Pruebas unitarias para el generador de triplos
 
-## Example
+## Ejemplo
 
-For the input expression: `x = (a * b) - c/d`
+Para la expresión de entrada: `x = (a * b) - c/d`
 
-The program generates the following triple table:
+El programa genera la siguiente tabla de triplos:
 
 ```
 | T    | OP  | OPE1 | OPE2 |
@@ -44,34 +44,34 @@ The program generates the following triple table:
 | T(3) | =   | x    | T(2) |
 ```
 
-## How to Run
+## Cómo Ejecutar
 
-1. Make sure you have Python installed on your system.
-2. Run the program using:
+1. Asegúrese de tener Python instalado en su sistema.
+2. Ejecute el programa usando:
    ```
    python app.py
    ```
-3. Enter a mathematical expression when prompted.
-4. The program will display the triple table.
-5. You can enter multiple expressions or type 'exit' to quit.
+3. Ingrese una expresión matemática cuando se le solicite.
+4. El programa mostrará la tabla de triplos.
+5. Puede ingresar múltiples expresiones o escribir 'salir' para terminar.
 
-## Running Tests
+## Ejecutando Pruebas
 
-To run the unit tests, use:
+Para ejecutar las pruebas unitarias, use:
 
 ```
 python test_triple_generator.py
 ```
 
-## Supported Operations
+## Operaciones Soportadas
 
-- Assignment (=)
-- Addition (+)
-- Subtraction (-)
-- Multiplication (\*)
-- Division (/)
-- Parentheses for grouping expressions
+- Asignación (=)
+- Suma (+)
+- Resta (-)
+- Multiplicación (\*)
+- División (/)
+- Paréntesis para agrupar expresiones
 
-## Technical Details
+## Detalles Técnicos
 
-The program uses a recursive descent parser approach to break down the expression according to operator precedence. It processes expressions from highest to lowest precedence, creating temporary variables to store intermediate results.
+El programa utiliza un enfoque de análisis recursivo descendente para descomponer la expresión según la precedencia de operadores. Procesa las expresiones desde la precedencia más alta a la más baja, creando variables temporales para almacenar resultados intermedios.

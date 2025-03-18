@@ -1,34 +1,34 @@
-from triple_generator import TripleTableGenerator
-from table_formatter import TableFormatter
+from triple_generator import GeneradorTablaTriplos
+from table_formatter import FormateadorTabla
 
 class CLI:
     def __init__(self):
-        self.generator = TripleTableGenerator()
+        self.generador = GeneradorTablaTriplos()
         
-    def run(self):
+    def ejecutar(self):
         """
-        Run the command line interface for the triple table generator
+        Ejecuta la interfaz de línea de comandos para el generador de tabla de triplos
         """
-        print("Triple Table Generator")
-        print("=====================")
-        print("Enter a mathematical expression (e.g., 'x = (a * b) - c/d'):")
+        print("Generador de Tabla de Triplos")
+        print("============================")
+        print("Ingrese una expresión matemática (por ejemplo, 'x = (a * b) - c/d'):")
         
         while True:
-            expression = input("> ")
-            if not expression or expression.lower() in ('exit', 'quit'):
+            expresion = input("> ")
+            if not expresion or expresion.lower() in ('salir', 'exit', 'quit'):
                 break
                 
-            triples = self.generator.parse_expression(expression)
-            formatted_table = TableFormatter.format_triple_table(triples)
+            triplos = self.generador.analizar_expresion(expresion)
+            tabla_formateada = FormateadorTabla.formatear_tabla_triplos(triplos)
             
-            print("\nGenerated Triple Table:")
-            print(formatted_table)
-            print("\nEnter another expression or 'exit' to quit:")
+            print("\nTabla de Triplos Generada:")
+            print(tabla_formateada)
+            print("\nIngrese otra expresión o 'salir' para terminar:")
 
 
 def main():
     cli = CLI()
-    cli.run()
+    cli.ejecutar()
 
 
 if __name__ == "__main__":
