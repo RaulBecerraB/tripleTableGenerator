@@ -33,6 +33,8 @@ El proyecto está organizado en varios módulos con responsabilidades específic
 
 Para la expresión de entrada: `x = (a * b) - c/d`
 
+![Árbol sintáctico para la expresión (a * b) - c/d](image.png)
+
 El programa genera la siguiente tabla de triplos:
 
 ```
@@ -54,14 +56,6 @@ El programa genera la siguiente tabla de triplos:
 3. Ingrese una expresión matemática cuando se le solicite.
 4. El programa mostrará la tabla de triplos.
 5. Puede ingresar múltiples expresiones o escribir 'salir' para terminar.
-
-## Ejecutando Pruebas
-
-Para ejecutar las pruebas unitarias, use:
-
-```
-python test_triple_generator.py
-```
 
 ## Operaciones Soportadas
 
