@@ -33,7 +33,7 @@ El proyecto está organizado en varios módulos con responsabilidades específic
 
 Para la expresión de entrada: `x = (a * b) - c/d`
 
-![Árbol sintáctico para la expresión (a * b) - c/d](image.png)
+![Árbol sintáctico para la expresión (a * b) - c/d](images/image.png)
 
 El programa genera la siguiente tabla de triplos:
 
